@@ -49,16 +49,23 @@ def convert_md_to_df(input_path: str, config_md: dict) -> pd.DataFrame:
     input_file = load_md(input_path)
 
     prev_step_number = 0
+    current_step_number_str = ""
     current_step_numner = 0
 
     for i, line in enumerate(input_file):
 
         if re.match(config_md["mark"]["steps"], line):
-            current_step_number = re.search('[0-9]+', line).group()
+            # 文頭がリスト形式(ex: 1.)の場合に該当数値と'. 'をテキストとして取得
+            current_step_number_str = re.search('[0-9]+. ', line).group()
+            # current_step_number_strを数値化
+            current_step_number = int(re.search('[0-9]+', current_step_number_str).group())
 
-            if current_step_number != prev_step_number:
+            # リスト番号がincrementされている場合は同じセル内の要素として扱う
+            if current_step_number == prev_step_number + 1:
                 current_item_dict["steps"] += line
                 prev_step_number = current_step_number
+
+            # それ以外の場合は別のセルの要素として扱う
             else:
                 df = append_df(df, current_item_dict)
                 current_item_dict["steps"] += line
@@ -90,6 +97,7 @@ def convert_md_to_df(input_path: str, config_md: dict) -> pd.DataFrame:
             current_item_dict["sub-sub-sub-sub-item"] = line.replace(config_md["mark"]["sub-sub-sub-sub-item"], "").replace("\n", "").lstrip()
 
             prev_step_number = 0
+            current_step_number_str = ""
             current_step_numner = 0
 
     # ファイル終了時点の最後の項目を追加
