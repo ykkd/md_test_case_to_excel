@@ -48,11 +48,20 @@ def convert_md_to_df(input_path: str, config_md: dict) -> pd.DataFrame:
     current_item_dict = {k: "" for k, _ in config_md["name"].items()}
     input_file = load_md(input_path)
 
-    test_case_num = 1
+    prev_step_number = 0
+    current_step_numner = 0
+
     for i, line in enumerate(input_file):
 
         if re.match(config_md["mark"]["steps"], line):
-            current_item_dict["steps"] += line
+            current_step_number = re.search('[0-9]+', line).group()
+
+            if current_step_number != prev_step_number:
+                current_item_dict["steps"] += line
+                prev_step_number = current_step_number
+            else:
+                df = append_df(df, current_item_dict)
+                current_item_dict["steps"] += line
         elif line.startswith(config_md["mark"]["expected"]):
             current_item_dict["expected"] += "・" + line.replace(config_md["mark"]["expected"], "").lstrip()
         elif line.startswith(config_md["mark"]["notes"]):
@@ -78,9 +87,10 @@ def convert_md_to_df(input_path: str, config_md: dict) -> pd.DataFrame:
         elif line.startswith(config_md["mark"]["sub-sub-sub-sub-item"]):
             if can_append_df(current_item_dict):
                 df = append_df(df, current_item_dict)
-            current_item_dict["number"] = test_case_num
-            test_case_num += 1
             current_item_dict["sub-sub-sub-sub-item"] = line.replace(config_md["mark"]["sub-sub-sub-sub-item"], "").replace("\n", "").lstrip()
+
+            prev_step_number = 0
+            current_step_numner = 0
 
     # ファイル終了時点の最後の項目を追加
     if can_append_df(current_item_dict):

@@ -5,7 +5,6 @@ common: &common
     sub-sub-item: "項目2"
     sub-sub-sub-item: "条件1"
     sub-sub-sub-sub-item: "条件2"
-    number: "No."
     steps: "手順"
     expected: "期待値"
     notes: "備考"
@@ -42,7 +41,6 @@ excel:
     sub-sub-item: 20
     sub-sub-sub-item: 20
     sub-sub-sub-sub-item: 20
-    number: 6
     steps: 25
     expected: 25
     notes: 40
@@ -54,7 +52,6 @@ excel:
     sub-sub-item: "left"
     sub-sub-sub-item: "left"
     sub-sub-sub-sub-item: "left"
-    number: "center"
     steps: "left"
     expected: "left"
     notes: "left"
@@ -66,7 +63,6 @@ excel:
     sub-sub-item: "top"
     sub-sub-sub-item: "top"
     sub-sub-sub-sub-item: "top"
-    number: "center"
     steps: "top"
     expected: "top"
     notes: "top"
