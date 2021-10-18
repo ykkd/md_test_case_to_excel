@@ -7,18 +7,6 @@ import pandas as pd
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.styles.borders import BORDER_THIN
 
-
-def write_summary(df: pd.DataFrame, writer: pd.ExcelWriter, sheet_name: str = "Summary") -> None:
-    df_summary = pd.DataFrame(index=["正常", "異常"], columns=["OK", "NG", "--"])
-    for row, col in product(list(df_summary.index), list(df_summary.columns)):
-        df_summary[col][row] = ((df["pos-neg"] == row) & (df["result"] == col)).sum()
-
-    df_summary.to_excel(writer, sheet_name=sheet_name)
-    worksheet = writer.sheets[sheet_name]
-    worksheet.insert_rows(0)
-    worksheet.insert_cols(0)
-
-
 def write_test_specification(df: pd.DataFrame, writer: pd.ExcelWriter, config_excel: dict, merge_cells: bool,
                              sheet_name: str = "TestSpecification") -> None:
     """
@@ -90,7 +78,6 @@ def convert_df_to_excel(df: pd.DataFrame, config_excel: dict, output_path: str =
     """
     writer = pd.ExcelWriter(output_path)
 
-    write_summary(df, writer)
     write_test_specification(df, writer, config_excel, merge_cells)
 
     try:

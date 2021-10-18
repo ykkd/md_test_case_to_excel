@@ -68,20 +68,19 @@ def convert_md_to_df(input_path: str, config_md: dict) -> pd.DataFrame:
                 df = append_df(df, current_item_dict)
             current_item_dict["sub-item"] = line.replace(config_md["mark"]["sub-item"], "").replace("\n", "").lstrip()
         elif line.startswith(config_md["mark"]["sub-sub-item"]):
-
             if can_append_df(current_item_dict):
                 df = append_df(df, current_item_dict)
-
-            if line[5:7] not in ["正常", "異常"] or line[8:10] not in ["OK", "NG", "--"]:
-                sys.stderr.write(f"Markdownファイルの{i}行目に構文エラーがあります。\n"
-                                 "小項目は以下のフォーマットで入力してください。\n\n"
-                                 "#### [正常|異常|準正常] [OK|NG|--] 小項目\n")
-                sys.exit(1)
-            current_item_dict["pos-neg"] = line[5:7]
-            current_item_dict["result"] = line[8:10]
-            current_item_dict["sub-sub-item"] = line[11:-1].lstrip()
-            current_item_dict["number"] = test_case_num
-            test_case_num += 1
+            current_item_dict["sub-sub-item"] = line.replace(config_md["mark"]["sub-sub-item"], "").replace("\n", "").lstrip()
+        elif line.startswith(config_md["mark"]["sub-sub-sub-item"]):
+            if can_append_df(current_item_dict):
+                df = append_df(df, current_item_dict)
+            current_item_dict["sub-sub-sub-item"] = line.replace(config_md["mark"]["sub-sub-sub-item"], "").replace("\n", "").lstrip()
+        elif line.startswith(config_md["mark"]["sub-sub-sub-sub-item"]):
+            if can_append_df(current_item_dict):
+                df = append_df(df, current_item_dict)
+                current_item_dict["number"] = test_case_num
+                test_case_num += 1
+            current_item_dict["sub-sub-sub-sub-item"] = line.replace(config_md["mark"]["sub-sub-sub-sub-item"], "").replace("\n", "").lstrip()
 
     # ファイル終了時点の最後の項目を追加
     if can_append_df(current_item_dict):
