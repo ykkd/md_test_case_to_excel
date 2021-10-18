@@ -31,8 +31,9 @@ excel:
   index:
     item: true
     sub-item: true
-    sub--sub-item: true
-    sub--sub-sub-item: true
+    sub-sub-item: true
+    sub-sub-sub-item: true
+    sub-sub-sub-sub-item: true
 
   # エクセルでの列幅
   length:
