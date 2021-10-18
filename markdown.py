@@ -78,8 +78,8 @@ def convert_md_to_df(input_path: str, config_md: dict) -> pd.DataFrame:
         elif line.startswith(config_md["mark"]["sub-sub-sub-sub-item"]):
             if can_append_df(current_item_dict):
                 df = append_df(df, current_item_dict)
-                current_item_dict["number"] = test_case_num
-                test_case_num += 1
+            current_item_dict["number"] = test_case_num
+            test_case_num += 1
             current_item_dict["sub-sub-sub-sub-item"] = line.replace(config_md["mark"]["sub-sub-sub-sub-item"], "").replace("\n", "").lstrip()
 
     # ファイル終了時点の最後の項目を追加
