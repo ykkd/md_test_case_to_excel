@@ -1,13 +1,12 @@
 common: &common
   name:
-    item: "大項目"
-    sub-item: "中項目"
-    pos-neg: "正常系\n／異常系"
-    sub-sub-item: "小項目"
-    result: "テスト結果"
-    number: "No."
-    steps: "確認手順"
-    expected: "想定動作"
+    item: "画面名"
+    sub-item: "項目1"
+    sub-sub-item: "項目2"
+    sub-sub-sub-item: "条件1"
+    sub-sub-sub-sub-item: "条件2"
+    steps: "手順"
+    expected: "期待値"
     notes: "備考"
 
 md:
@@ -15,6 +14,8 @@ md:
     item: "## "
     sub-item: "### "
     sub-sub-item: "#### "
+    sub-sub-sub-item: "##### "
+    sub-sub-sub-sub-item: "###### "
     steps: "[0-9]+. "
     expected: "* [ ] "
     notes: "- "
@@ -29,30 +30,28 @@ excel:
   index:
     item: true
     sub-item: true
-    pos-neg: true
     sub-sub-item: true
-    result: true
+    sub-sub-sub-item: true
+    sub-sub-sub-sub-item: true
 
   # エクセルでの列幅
   length:
     item: 20
-    sub-item: 15
-    pos-neg: 10
-    sub-sub-item: 50
-    result: 10
-    number: 6
-    steps: 70
-    expected: 70
+    sub-item: 20
+    sub-sub-item: 20
+    sub-sub-sub-item: 20
+    sub-sub-sub-sub-item: 20
+    steps: 25
+    expected: 25
     notes: 40
 
   # 各列の水平方向位置
   horizontal:
     item: "center"
     sub-item: "center"
-    pos-neg: "center"
     sub-sub-item: "left"
-    result: "center"
-    number: "center"
+    sub-sub-sub-item: "left"
+    sub-sub-sub-sub-item: "left"
     steps: "left"
     expected: "left"
     notes: "left"
@@ -61,10 +60,9 @@ excel:
   vertical:
     item: "top"
     sub-item: "top"
-    pos-neg: "top"
     sub-sub-item: "top"
-    result: "center"
-    number: "center"
+    sub-sub-sub-item: "top"
+    sub-sub-sub-sub-item: "top"
     steps: "top"
     expected: "top"
     notes: "top"
